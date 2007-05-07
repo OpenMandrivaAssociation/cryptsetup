@@ -1,9 +1,7 @@
-%define name            cryptsetup-luks
-%define version         1.0.3
-%define release         %mkrel 2
+%define name            cryptsetup
+%define version         1.0.5
+%define release         %mkrel 1
 %define	major		0
-
-%define __libtoolize	%{nil}
 
 %define	_sbindir	/sbin
 %define	libname		%mklibname cryptsetup %major
@@ -15,9 +13,10 @@ Release: %{release}
 Summary: Utility for setting up encrypted filesystems
 License: GPL
 Group: System/Base
-URL: http://clemens.endorphin.org/LUKS
-Source0: %{name}-%{version}.tar.bz2
-Source1: %{name}-%{version}.tar.bz2.asc
+URL: http://luks.endorphin.org/
+Source0: http://luks.endorphin.org/source/%{name}-%{version}.tar.bz2
+Source1: http://luks.endorphin.org/source/%{name}-%{version}.tar.bz2.asc
+Patch: cryptsetup-1.0.5-odd.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libgcrypt-devel >= 1.1.42
 BuildRequires: libgpg-error-devel
@@ -25,8 +24,8 @@ BuildRequires: libdevmapper-devel
 BuildRequires: libext2fs-devel
 BuildRequires: libpopt-devel
 BuildRequires: glibc-static-devel
-Obsoletes: cryptsetup
-Provides: cryptsetup
+Obsoletes: cryptsetup-luks < 1.0.5
+Provides: cryptsetup-luks = %{version}-%{release}
 
 %description
 LUKS is the upcoming standard for Linux hard disk encryption. 
@@ -35,7 +34,7 @@ compatibility among distributions, but also provide secure management
 of multiple user passwords. In contrast to existing solution, LUKS stores 
 all setup necessary setup information in the partition header, enabling 
 the user to transport or migrate his data seamlessly.
-LUKS for dm-crypt is implemented in cryptsetup. cryptsetup-luks is intended 
+LUKS for dm-crypt is implemented in cryptsetup. cryptsetup-luks is
 as a complete replacement for the original cryptsetup. It provides all the 
 functionally of the original version plus all LUKS features, that are 
 accessible by luks* action.
@@ -78,10 +77,12 @@ for building programs which use cryptsetup-luks.
 
 %prep
 %setup -q
+%patch -p1 -b .odd
 
 %build
 # static build for security reasons, and disable selinux
 export ac_cv_lib_selinux_is_selinux_enabled=no
+autoconf
 %configure2_5x --enable-static
 %make
 
@@ -113,6 +114,4 @@ rm -rf $RPM_BUILD_ROOT
 %files -n %libname
 %exclude %{_libdir}/libcryptsetup.so.%{major}
 %{_libdir}/libcryptsetup.so.%{major}.*
-
-
 

@@ -1,6 +1,6 @@
 %define name            cryptsetup
 %define version         1.0.5
-%define release         %mkrel 1
+%define release         %mkrel 2
 %define	major		0
 
 %define	_sbindir	/sbin
@@ -16,7 +16,6 @@ Group: System/Base
 URL: http://luks.endorphin.org/
 Source0: http://luks.endorphin.org/source/%{name}-%{version}.tar.bz2
 Source1: http://luks.endorphin.org/source/%{name}-%{version}.tar.bz2.asc
-Patch: cryptsetup-1.0.5-odd.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libgcrypt-devel >= 1.1.42
 BuildRequires: libgpg-error-devel
@@ -77,7 +76,6 @@ for building programs which use cryptsetup-luks.
 
 %prep
 %setup -q
-%patch -p1 -b .odd
 
 %build
 # static build for security reasons, and disable selinux

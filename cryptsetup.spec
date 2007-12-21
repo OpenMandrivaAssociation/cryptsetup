@@ -18,6 +18,7 @@ Source0: http://luks.endorphin.org/source/%{name}-%{version}.tar.bz2
 Source1: http://luks.endorphin.org/source/%{name}-%{version}.tar.bz2.asc
 # (fc) 1.0.5-3mdv fix support for LUKS encrypted CD/DVD (Fedora)
 Patch0: cryptsetup-1.0.5-readonly_detection.patch
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libgcrypt-devel >= 1.1.42
 BuildRequires: libgpg-error-devel
 BuildRequires: libdevmapper-devel

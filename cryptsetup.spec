@@ -1,6 +1,6 @@
 %define name            cryptsetup
 %define version         1.0.5
-%define release         %mkrel 4
+%define release         %mkrel 5
 %define	major		0
 
 %define	_sbindir	/sbin
@@ -18,6 +18,8 @@ Source0: http://luks.endorphin.org/source/%{name}-%{version}.tar.bz2
 Source1: http://luks.endorphin.org/source/%{name}-%{version}.tar.bz2.asc
 # (fc) 1.0.5-3mdv fix support for LUKS encrypted CD/DVD (Fedora)
 Patch0: cryptsetup-1.0.5-readonly_detection.patch
+# https://bugs.launchpad.net/ubuntu/+source/udev/+bug/132373
+Patch1: cryptsetup-1.0.5-udevsettle.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libgcrypt-devel >= 1.1.42
 BuildRequires: libgpg-error-devel
@@ -79,6 +81,7 @@ for building programs which use cryptsetup-luks.
 %prep
 %setup -q
 %patch0 -p1 -b .readonly
+%patch1 -p1 -b .udevsettle
 
 %build
 # static build for security reasons, and disable selinux

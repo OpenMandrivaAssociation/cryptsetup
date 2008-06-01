@@ -96,7 +96,6 @@ rm libcryptsetup.so
 mkdir -p $RPM_BUILD_ROOT/%{_libdir}
 ln -s ../../%{_lib}/$(ls libcryptsetup.so.?.?.?) $RPM_BUILD_ROOT/%{_libdir}/libcryptsetup.so
 mv *.{a,la} %buildroot%_libdir
-rm -f *.so.%{major}
 popd
 
 %find_lang %{name}
@@ -121,4 +120,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libcryptsetup.so
 
 %files -n %libname
-/%{_lib}/libcryptsetup.so.%{major}.*
+/%{_lib}/libcryptsetup.so.%{major}*

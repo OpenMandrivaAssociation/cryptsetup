@@ -1,11 +1,9 @@
 %define name            cryptsetup
-%define version         1.0.5
-%define release         %mkrel 5
+%define version         1.0.6
+%define release         %mkrel 1
 %define	major		0
-
-%define	_sbindir	/sbin
 %define	libname		%mklibname cryptsetup %major
-%define	dlibname	%mklibname cryptsetup %major -d
+%define	dlibname	%mklibname cryptsetup -d
 
 Name: %{name}
 Version: %{version}
@@ -16,8 +14,6 @@ Group: System/Base
 URL: http://luks.endorphin.org/
 Source0: http://luks.endorphin.org/source/%{name}-%{version}.tar.bz2
 Source1: http://luks.endorphin.org/source/%{name}-%{version}.tar.bz2.asc
-# (fc) 1.0.5-3mdv fix support for LUKS encrypted CD/DVD (Fedora)
-Patch0: cryptsetup-1.0.5-readonly_detection.patch
 # https://bugs.launchpad.net/ubuntu/+source/udev/+bug/132373
 Patch1: cryptsetup-1.0.5-udevsettle.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
@@ -66,6 +62,7 @@ Requires: libgpg-error-devel
 Requires: libdevmapper-devel
 Requires: libext2fs-devel
 Requires: libpopt-devel
+Obsoletes: %mklibname -d cryptsetup 0
 
 %description -n %dlibname
 LUKS is the upcoming standard for Linux hard disk encryption.
@@ -80,19 +77,27 @@ for building programs which use cryptsetup-luks.
 
 %prep
 %setup -q
-%patch0 -p1 -b .readonly
 %patch1 -p1 -b .udevsettle
 
 %build
 # static build for security reasons, and disable selinux
 export ac_cv_lib_selinux_is_selinux_enabled=no
 autoconf
-%configure2_5x --enable-static
+%configure2_5x --enable-static --sbindir=/sbin --libdir=/%{_lib}
 %make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%makeinstall
+%makeinstall_std
+
+# move libcryptsetup.so to %{_libdir}
+pushd $RPM_BUILD_ROOT/%{_lib}
+rm libcryptsetup.so
+mkdir -p $RPM_BUILD_ROOT/%{_libdir}
+ln -s ../../%{_lib}/$(ls libcryptsetup.so.?.?.?) $RPM_BUILD_ROOT/%{_libdir}/libcryptsetup.so
+mv *.{a,la} %buildroot%_libdir
+rm -f *.so.%{major}
+popd
 
 %find_lang %{name}
 
@@ -107,7 +112,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %doc COPYING ChangeLog AUTHORS INSTALL NEWS README
 %{_mandir}/man8/cryptsetup.8*
-%{_sbindir}/cryptsetup
+/sbin/cryptsetup
 
 %files -n %dlibname
 %{_includedir}/libcryptsetup.h
@@ -116,6 +121,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libcryptsetup.so
 
 %files -n %libname
-%exclude %{_libdir}/libcryptsetup.so.%{major}
-%{_libdir}/libcryptsetup.so.%{major}.*
-
+/%{_lib}/libcryptsetup.so.%{major}.*

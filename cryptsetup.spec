@@ -1,6 +1,6 @@
 %define name            cryptsetup
 %define version         1.0.6
-%define release         %mkrel 2
+%define release         %mkrel 3
 %define	major		0
 %define	libname		%mklibname cryptsetup %major
 %define	dlibname	%mklibname cryptsetup -d
@@ -14,6 +14,8 @@ Group: System/Base
 URL: http://luks.endorphin.org/
 Source0: http://luks.endorphin.org/source/%{name}-%{version}.tar.bz2
 Source1: http://luks.endorphin.org/source/%{name}-%{version}.tar.bz2.asc
+# svn diff -c 57 http://luks.endorphin.org/svn/cryptsetup/
+Patch0: cryptsetup-1.0.6-udevadm.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libgcrypt-devel >= 1.1.42
 BuildRequires: libgpg-error-devel
@@ -75,6 +77,7 @@ for building programs which use cryptsetup-luks.
 
 %prep
 %setup -q
+%patch0 -p0 -b .udevadm
 
 %build
 # static build for security reasons, and disable selinux

@@ -1,6 +1,6 @@
 %define name            cryptsetup
-%define version         1.0.6
-%define release         %mkrel 4
+%define version         1.0.7
+%define release         %mkrel 1
 %define	major		0
 %define	libname		%mklibname cryptsetup %major
 %define	dlibname	%mklibname cryptsetup -d
@@ -11,11 +11,9 @@ Release: %{release}
 Summary: Utility for setting up encrypted filesystems
 License: GPL
 Group: System/Base
-URL: http://luks.endorphin.org/
-Source0: http://luks.endorphin.org/source/%{name}-%{version}.tar.bz2
-Source1: http://luks.endorphin.org/source/%{name}-%{version}.tar.bz2.asc
-# svn diff -c 57 http://luks.endorphin.org/svn/cryptsetup/
-Patch0: cryptsetup-1.0.6-udevadm.patch
+URL: http://code.google.com/p/cryptsetup/
+Source0: http://cryptsetup.googlecode.com/files/%{name}-%{version}.tar.bz2
+Source1: http://cryptsetup.googlecode.com/files/%{name}-%{version}.tar.bz2.asc
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libgcrypt-devel >= 1.1.42
 BuildRequires: libgpg-error-devel
@@ -77,31 +75,28 @@ for building programs which use cryptsetup-luks.
 
 %prep
 %setup -q
-%patch0 -p0 -b .udevadm
 
 %build
 # static build for security reasons, and disable selinux
-export ac_cv_lib_selinux_is_selinux_enabled=no
-autoconf
-%configure2_5x --enable-static --sbindir=/sbin --libdir=/%{_lib}
+%configure2_5x --disable-selinux --enable-static --sbindir=/sbin --libdir=/%{_lib}
 %make
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 %makeinstall_std
 
 # move libcryptsetup.so to %{_libdir}
-pushd $RPM_BUILD_ROOT/%{_lib}
+pushd %{buildroot}/%{_lib}
 rm libcryptsetup.so
-mkdir -p $RPM_BUILD_ROOT/%{_libdir}
-ln -s ../../%{_lib}/$(ls libcryptsetup.so.?.?.?) $RPM_BUILD_ROOT/%{_libdir}/libcryptsetup.so
+mkdir -p %{buildroot}/%{_libdir}
+ln -s ../../%{_lib}/$(ls libcryptsetup.so.?.?.?) %{buildroot}/%{_libdir}/libcryptsetup.so
 mv *.{a,la} %buildroot%_libdir
 popd
 
 %find_lang %{name}
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %if %mdkversion < 200900
 %post -n %libname -p /sbin/ldconfig

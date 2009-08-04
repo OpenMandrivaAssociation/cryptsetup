@@ -18,7 +18,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libgcrypt-devel >= 1.1.42
 BuildRequires: libgpg-error-devel
 BuildRequires: libdevmapper-devel
-BuildRequires: libext2fs-devel
+BuildRequires: libuuid-devel
 BuildRequires: libpopt-devel
 BuildRequires: glibc-static-devel
 Obsoletes: cryptsetup-luks < 1.0.5

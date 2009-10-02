@@ -1,9 +1,10 @@
 %define name            cryptsetup
-%define version         1.0.7
-%define release         %mkrel 2
-%define	major		0
-%define	libname		%mklibname cryptsetup %major
-%define	dlibname	%mklibname cryptsetup -d
+%define version         1.1.0
+%define release         %mkrel 0.rc2
+%define subver          -rc2
+%define major		1
+%define libname		%mklibname cryptsetup %major
+%define dlibname	%mklibname cryptsetup -d
 
 Name: %{name}
 Version: %{version}
@@ -12,8 +13,8 @@ Summary: Utility for setting up encrypted filesystems
 License: GPL
 Group: System/Base
 URL: http://code.google.com/p/cryptsetup/
-Source0: http://cryptsetup.googlecode.com/files/%{name}-%{version}.tar.bz2
-Source1: http://cryptsetup.googlecode.com/files/%{name}-%{version}.tar.bz2.asc
+Source0: http://cryptsetup.googlecode.com/files/%{name}-%{version}%{subver}.tar.bz2
+#Source1: http://cryptsetup.googlecode.com/files/%{name}-%{version}%{subver}.tar.bz2.asc
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libgcrypt-devel >= 1.1.42
 BuildRequires: libgpg-error-devel
@@ -60,6 +61,7 @@ Requires: libgpg-error-devel
 Requires: libdevmapper-devel
 Requires: libext2fs-devel
 Requires: libpopt-devel
+Requires: pkgconfig
 Obsoletes: %mklibname -d cryptsetup 0
 
 %description -n %dlibname
@@ -74,24 +76,25 @@ This package contains the header files and development libraries
 for building programs which use cryptsetup-luks.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}%{subver}
 
 %build
 # static build for security reasons, and disable selinux
-%configure2_5x --disable-selinux --enable-static --sbindir=/sbin --libdir=/%{_lib}
+# anyway libgcrypt is under usr
+%configure2_5x --disable-selinux --enable-static --sbindir=/sbin
 %make
 
 %install
 rm -rf %{buildroot}
 %makeinstall_std
 
-# move libcryptsetup.so to %{_libdir}
-pushd %{buildroot}/%{_lib}
-rm libcryptsetup.so
-mkdir -p %{buildroot}/%{_libdir}
-ln -s ../../%{_lib}/$(ls libcryptsetup.so.?.?.?) %{buildroot}/%{_libdir}/libcryptsetup.so
-mv *.{a,la} %buildroot%_libdir
-popd
+# disabled since libgcrypt is under usr
+# move shared libraries in /%{_lib}
+# pushd %{buildroot}/%{_libdir}
+# mkdir -p ../../%{_lib}
+# mv lib*.so.* ../../%{_lib}
+# ln -s -f ../../%{_lib}/libcryptsetup.so.%{major}.* libcryptsetup.so
+# popd
 
 %find_lang %{name}
 
@@ -100,15 +103,12 @@ rm -rf %{buildroot}
 
 %if %mdkversion < 200900
 %post -n %libname -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
 %postun -n %libname -p /sbin/ldconfig
 %endif
 
 %files -f %name.lang
 %defattr(-,root,root)
-%doc COPYING ChangeLog AUTHORS INSTALL NEWS README
+%doc ChangeLog AUTHORS INSTALL NEWS README TODO
 %{_mandir}/man8/cryptsetup.8*
 /sbin/cryptsetup
 
@@ -117,6 +117,7 @@ rm -rf %{buildroot}
 %{_libdir}/libcryptsetup.a
 %{_libdir}/libcryptsetup.la
 %{_libdir}/libcryptsetup.so
+%{_libdir}/pkgconfig/libcryptsetup.pc
 
 %files -n %libname
-/%{_lib}/libcryptsetup.so.%{major}*
+/%{_libdir}/libcryptsetup.so.%{major}*

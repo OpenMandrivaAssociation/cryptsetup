@@ -1,10 +1,12 @@
 %define name            cryptsetup
 %define version         1.1.0
-%define release         %mkrel 0.rc2
-%define subver          -rc2
+%define release         %mkrel 1
+%define subver          %{nil}
 %define major		1
 %define libname		%mklibname cryptsetup %major
 %define dlibname	%mklibname cryptsetup -d
+
+%bcond_without compatible
 
 Name: %{name}
 Version: %{version}
@@ -14,7 +16,7 @@ License: GPL
 Group: System/Base
 URL: http://code.google.com/p/cryptsetup/
 Source0: http://cryptsetup.googlecode.com/files/%{name}-%{version}%{subver}.tar.bz2
-#Source1: http://cryptsetup.googlecode.com/files/%{name}-%{version}%{subver}.tar.bz2.asc
+Source1: http://cryptsetup.googlecode.com/files/%{name}-%{version}%{subver}.tar.bz2.asc
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libgcrypt-devel >= 1.1.42
 BuildRequires: libgpg-error-devel
@@ -80,8 +82,11 @@ for building programs which use cryptsetup-luks.
 
 %build
 # static build for security reasons, and disable selinux
-# anyway libgcrypt is under usr
-%configure2_5x --disable-selinux --enable-static --sbindir=/sbin
+%configure2_5x --disable-selinux --enable-static --sbindir=/sbin \
+%if %{with compatible}
+	--with-plain-mode=cbc-plain --with-luks1-keybits=128 \
+%endif
+# end of configure
 %make
 
 %install

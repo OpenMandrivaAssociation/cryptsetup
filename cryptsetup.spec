@@ -8,24 +8,24 @@
 
 %bcond_without compatible
 
-Name: %{name}
-Version: %{version}
-Release: %{release}
-Summary: Utility for setting up encrypted filesystems
-License: GPL
-Group: System/Base
-URL: http://code.google.com/p/cryptsetup/
-Source0: http://cryptsetup.googlecode.com/files/%{name}-%{version}%{subver}.tar.bz2
-Source1: http://cryptsetup.googlecode.com/files/%{name}-%{version}%{subver}.tar.bz2.asc
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: libgcrypt-devel >= 1.1.42
-BuildRequires: libgpg-error-devel
-BuildRequires: libdevmapper-devel
-BuildRequires: libuuid-devel
-BuildRequires: libpopt-devel
-BuildRequires: glibc-static-devel
-Obsoletes: cryptsetup-luks < 1.0.5
-Provides: cryptsetup-luks = %{version}-%{release}
+Name:		%{name}
+Version:	%{version}
+Release:	%{release}
+Summary:	Utility for setting up encrypted filesystems
+License:	GPLv2
+Group:		System/Base
+URL:		http://code.google.com/p/cryptsetup/
+Source0:	http://cryptsetup.googlecode.com/files/%{name}-%{version}%{subver}.tar.bz2
+Source1:	http://cryptsetup.googlecode.com/files/%{name}-%{version}%{subver}.tar.bz2.asc
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
+BuildRequires:	libgcrypt-devel >= 1.1.42
+BuildRequires:	libgpg-error-devel
+BuildRequires:	libdevmapper-devel
+BuildRequires:	libuuid-devel
+BuildRequires:	libpopt-devel
+BuildRequires:	glibc-static-devel
+Obsoletes:	cryptsetup-luks < 1.0.5
+Provides:	cryptsetup-luks = %{version}-%{release}
 
 %description
 LUKS is the upcoming standard for Linux hard disk encryption. 
@@ -39,9 +39,9 @@ as a complete replacement for the original cryptsetup. It provides all the
 functionally of the original version plus all LUKS features, that are 
 accessible by luks* action.
 
-%package -n %libname
-Summary: Library for setting up encrypted filesystems
-Group: System/Libraries
+%package -n	%libname
+Summary:	Library for setting up encrypted filesystems
+Group:		System/Libraries
 
 %description -n %libname
 LUKS is the upcoming standard for Linux hard disk encryption.
@@ -55,16 +55,16 @@ This package contains the shared libraries required for running
 programs which use cryptsetup-luks.
 
 
-%package -n %dlibname
-Summary: Development library for setting up encrypted filesystems
-Group: Development/C
-Requires: libgcrypt-devel >= 1.1.42
-Requires: libgpg-error-devel
-Requires: libdevmapper-devel
-Requires: libext2fs-devel
-Requires: libpopt-devel
-Requires: pkgconfig
-Obsoletes: %mklibname -d cryptsetup 0
+%package -n	%dlibname
+Summary:	Development library for setting up encrypted filesystems
+Group:		Development/C
+Requires:	libgcrypt-devel >= 1.1.42
+Requires:	libgpg-error-devel
+Requires:	libdevmapper-devel
+Requires:	libext2fs-devel
+Requires:	libpopt-devel
+Requires:	pkgconfig
+Obsoletes:	%mklibname -d cryptsetup 0
 
 %description -n %dlibname
 LUKS is the upcoming standard for Linux hard disk encryption.

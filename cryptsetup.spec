@@ -1,6 +1,6 @@
 %define name            cryptsetup
 %define version         1.1.0
-%define release         %mkrel 1
+%define release         %mkrel 2
 %define subver          %{nil}
 %define major		1
 %define libname		%mklibname cryptsetup %major
@@ -64,6 +64,7 @@ Requires:	libdevmapper-devel
 Requires:	libext2fs-devel
 Requires:	libpopt-devel
 Requires:	pkgconfig
+Requires:	%libname = %{version}-%{release}
 Obsoletes:	%mklibname -d cryptsetup 0
 
 %description -n %dlibname

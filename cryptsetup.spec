@@ -58,13 +58,8 @@ programs which use cryptsetup-luks.
 %package -n	%dlibname
 Summary:	Development library for setting up encrypted filesystems
 Group:		Development/C
-Requires:	libgcrypt-devel >= 1.1.42
-Requires:	libgpg-error-devel
-Requires:	libdevmapper-devel
-Requires:	libext2fs-devel
-Requires:	libpopt-devel
-Requires:	pkgconfig
 Requires:	%libname = %{version}-%{release}
+Provides:	%name-devel = %{version}-%{release}
 Obsoletes:	%mklibname -d cryptsetup 0
 
 %description -n %dlibname

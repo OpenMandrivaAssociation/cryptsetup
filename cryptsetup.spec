@@ -1,6 +1,6 @@
 %define name            cryptsetup
 %define version         1.1.0
-%define release         %mkrel 2
+%define release         %mkrel 3
 %define subver          %{nil}
 %define major		1
 %define libname		%mklibname cryptsetup %major
@@ -59,6 +59,7 @@ programs which use cryptsetup-luks.
 Summary:	Development library for setting up encrypted filesystems
 Group:		Development/C
 Requires:	%libname = %{version}-%{release}
+provides:	cryptsetup-devel
 Provides:	%name-devel = %{version}-%{release}
 Obsoletes:	%mklibname -d cryptsetup 0
 

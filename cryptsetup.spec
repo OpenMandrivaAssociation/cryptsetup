@@ -1,6 +1,6 @@
 %define name            cryptsetup
 %define version         1.2.0
-%define release         %mkrel 1
+%define release         %mkrel 2
 %define subver          %{nil}
 %define major		1
 %define libname		%mklibname cryptsetup %major
@@ -115,7 +115,7 @@ rm -rf %{buildroot}
 
 %files -f %name.lang
 %defattr(-,root,root)
-%doc ChangeLog AUTHORS INSTALL NEWS README TODO
+%doc ChangeLog AUTHORS FAQ INSTALL NEWS README TODO
 %{_mandir}/man8/cryptsetup.8*
 /sbin/cryptsetup
 

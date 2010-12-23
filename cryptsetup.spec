@@ -1,12 +1,13 @@
 %define name            cryptsetup
-%define version         1.1.3
+%define version         1.2.0
 %define release         %mkrel 1
 %define subver          %{nil}
 %define major		1
 %define libname		%mklibname cryptsetup %major
 %define dlibname	%mklibname cryptsetup -d
 
-%bcond_without compatible
+%bcond_with compatible
+%bcond_with static
 
 Name:		%{name}
 Version:	%{version}
@@ -23,7 +24,9 @@ BuildRequires:	libgpg-error-devel
 BuildRequires:	libdevmapper-devel
 BuildRequires:	libuuid-devel
 BuildRequires:	libpopt-devel
+%if %{with static}
 BuildRequires:	glibc-static-devel
+%endif
 Obsoletes:	cryptsetup-luks < 1.0.5
 Provides:	cryptsetup-luks = %{version}-%{release}
 
@@ -78,8 +81,10 @@ for building programs which use cryptsetup-luks.
 %setup -q -n %{name}-%{version}%{subver}
 
 %build
-# static build for security reasons, and disable selinux
-%configure2_5x --disable-selinux --enable-static --sbindir=/sbin \
+%configure2_5x --disable-selinux --sbindir=/sbin \
+%if %{with static}
+	--enable-static-cryptsetup \
+%endif
 %if %{with compatible}
 	--with-plain-mode=cbc-plain --with-luks1-keybits=128 \
 %endif
@@ -116,7 +121,9 @@ rm -rf %{buildroot}
 
 %files -n %dlibname
 %{_includedir}/libcryptsetup.h
+%if %{with static}
 %{_libdir}/libcryptsetup.a
+%endif
 %{_libdir}/libcryptsetup.la
 %{_libdir}/libcryptsetup.so
 %{_libdir}/pkgconfig/libcryptsetup.pc

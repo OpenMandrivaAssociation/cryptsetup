@@ -1,6 +1,6 @@
 %define name            cryptsetup
 %define version         1.2.0
-%define release         %mkrel 2
+%define release         %mkrel 3
 %define subver          %{nil}
 %define major		1
 %define libname		%mklibname cryptsetup %major

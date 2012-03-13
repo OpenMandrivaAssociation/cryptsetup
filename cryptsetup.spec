@@ -1,24 +1,20 @@
-%define name            cryptsetup
-%define version         1.3.1
-%define release         %mkrel 1
 %define subver          %{nil}
-%define major		1
+%define major		4
 %define libname		%mklibname cryptsetup %major
 %define dlibname	%mklibname cryptsetup -d
 
 %bcond_with compatible
 %bcond_with static
 
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		cryptsetup
+Version:	1.4.1
+Release:	1
 Summary:	Utility for setting up encrypted filesystems
 License:	GPLv2
 Group:		System/Base
 URL:		http://code.google.com/p/cryptsetup/
 Source0:	http://cryptsetup.googlecode.com/files/%{name}-%{version}%{subver}.tar.bz2
 Source1:	http://cryptsetup.googlecode.com/files/%{name}-%{version}%{subver}.tar.bz2.asc
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	libgcrypt-devel >= 1.1.42
 BuildRequires:	libgpg-error-devel
 BuildRequires:	libdevmapper-devel
@@ -103,6 +99,9 @@ rm -rf %{buildroot}
 # ln -s -f ../../%{_lib}/libcryptsetup.so.%{major}.* libcryptsetup.so
 # popd
 
+# Get rid of useless *.la file
+rm -f %buildroot%_libdir/*.la
+
 %find_lang %{name}
 
 %clean
@@ -124,7 +123,6 @@ rm -rf %{buildroot}
 %if %{with static}
 %{_libdir}/libcryptsetup.a
 %endif
-%{_libdir}/libcryptsetup.la
 %{_libdir}/libcryptsetup.so
 %{_libdir}/pkgconfig/libcryptsetup.pc
 

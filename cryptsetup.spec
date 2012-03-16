@@ -8,7 +8,7 @@
 
 Name:		cryptsetup
 Version:	1.4.1
-Release:	1
+Release:	2
 Summary:	Utility for setting up encrypted filesystems
 License:	GPLv2
 Group:		System/Base
@@ -58,7 +58,7 @@ programs which use cryptsetup-luks.
 Summary:	Development library for setting up encrypted filesystems
 Group:		Development/C
 Requires:	%libname = %{version}-%{release}
-provides:	cryptsetup-devel
+Provides:	cryptsetup-devel
 Provides:	%name-devel = %{version}-%{release}
 Obsoletes:	%mklibname -d cryptsetup 0
 
@@ -88,7 +88,7 @@ for building programs which use cryptsetup-luks.
 %make
 
 %install
-rm -rf %{buildroot}
+
 %makeinstall_std
 
 # disabled since libgcrypt is under usr
@@ -104,16 +104,7 @@ rm -f %buildroot%_libdir/*.la
 
 %find_lang %{name}
 
-%clean
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %libname -p /sbin/ldconfig
-%postun -n %libname -p /sbin/ldconfig
-%endif
-
 %files -f %name.lang
-%defattr(-,root,root)
 %doc ChangeLog AUTHORS FAQ INSTALL NEWS README TODO
 %{_mandir}/man8/cryptsetup.8*
 /sbin/cryptsetup

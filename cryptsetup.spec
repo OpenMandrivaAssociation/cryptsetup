@@ -17,9 +17,9 @@ Source0:	http://cryptsetup.googlecode.com/files/%{name}-%{version}%{subver}.tar.
 Source1:	http://cryptsetup.googlecode.com/files/%{name}-%{version}%{subver}.tar.bz2.asc
 BuildRequires:	libgcrypt-devel >= 1.1.42
 BuildRequires:	libgpg-error-devel
-BuildRequires:	libdevmapper-devel
-BuildRequires:	libuuid-devel
-BuildRequires:	libpopt-devel
+BuildRequires:	pkgconfig(devmapper)
+BuildRequires:	pkgconfig(uuid)
+BuildRequires:	pkgconfig(popt)
 %if %{with static}
 BuildRequires:	glibc-static-devel
 %endif

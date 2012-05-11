@@ -7,8 +7,8 @@
 %bcond_with static
 
 Name:		cryptsetup
-Version:	1.4.1
-Release:	2
+Version:	1.4.2
+Release:	1
 Summary:	Utility for setting up encrypted filesystems
 License:	GPLv2
 Group:		System/Base

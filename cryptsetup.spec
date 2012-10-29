@@ -20,6 +20,7 @@ BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(devmapper)
 BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(popt)
+BuildRequires:	pkgconfig(python2)
 %if %{with static}
 BuildRequires:	glibc-static-devel
 %endif
@@ -107,6 +108,14 @@ the user to transport or migrate his data seamlessly.
 This package contains the header files and development libraries
 for building programs which use cryptsetup-luks.
 
+%package -n	python-%{name}
+Summary:	Python bindings for %{name}
+Group:		Development/Python
+
+%description -n	python-%{name}
+This package provides Python bindings for libcryptsetup, a library
+for setting up disk encryption using dm-crypt kernel module.
+
 %prep
 %setup -q
 
@@ -127,6 +136,7 @@ mkdir -p system
 pushd system
 %configure2_5x	--disable-selinux \
 		--sbindir=/sbin \
+		--enable-python \
 		--enable-cryptsetup-reencrypt \
 %if %{with static}
 		--enable-static-cryptsetup \
@@ -191,3 +201,6 @@ ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir
 %{uclibc_root}%{_libdir}/libcryptsetup.so
 %endif
 %{_libdir}/pkgconfig/libcryptsetup.pc
+
+%files -n python-%{name}
+%{python_sitearch}/pycryptsetup.so

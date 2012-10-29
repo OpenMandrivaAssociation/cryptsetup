@@ -81,8 +81,9 @@ for building programs which use cryptsetup-luks.
 %endif
 %if %{with compatible}
 		--with-plain-mode=cbc-plain \
-		--with-luks1-keybits=128 \
+		--with-luks1-keybits=128
 %endif
+
 %make
 
 %install

@@ -2,8 +2,9 @@
 %define	libname	%mklibname cryptsetup %{major}
 %define	devname	%mklibname cryptsetup -d
 
-%bcond_with compatible
-%bcond_with static
+%bcond_with	compatible
+%bcond_with	static
+%bcond_without	uclibc
 
 Name:		cryptsetup
 Version:	1.5.1
@@ -14,17 +15,36 @@ Group:		System/Base
 URL:		http://code.google.com/p/cryptsetup/
 Source0:	http://cryptsetup.googlecode.com/files/%{name}-%{version}.tar.bz2
 Source1:	http://cryptsetup.googlecode.com/files/%{name}-%{version}.tar.bz2.asc
-BuildRequires:	libgcrypt-devel >= 1.1.42
-BuildRequires:	libgpg-error-devel
+BuildRequires:	pkgconfig(libgcrypt)
+BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(devmapper)
 BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(popt)
 %if %{with static}
 BuildRequires:	glibc-static-devel
 %endif
+%if %{with uclibc}
+BuildRequires:	uClibc-devel >= 0.9.33.2-15
+%endif
 %rename		cryptsetup-luks
 
 %description
+LUKS is the upcoming standard for Linux hard disk encryption. 
+By providing a standard on-disk-format, it does not only facilitate 
+compatibility among distributions, but also provide secure management 
+of multiple user passwords. In contrast to existing solution, LUKS stores 
+all setup necessary setup information in the partition header, enabling 
+the user to transport or migrate his data seamlessly.
+LUKS for dm-crypt is implemented in cryptsetup. cryptsetup-luks is
+as a complete replacement for the original cryptsetup. It provides all the 
+functionally of the original version plus all LUKS features, that are 
+accessible by luks* action.
+
+%package -n	uclibc-%{name}
+Summary:	Utility for setting up encrypted filesystems (uClibc build)
+Group:		System/Base
+
+%description -n	uclibc-%{name}
 LUKS is the upcoming standard for Linux hard disk encryption. 
 By providing a standard on-disk-format, it does not only facilitate 
 compatibility among distributions, but also provide secure management 
@@ -51,11 +71,28 @@ the user to transport or migrate his data seamlessly.
 This package contains the shared libraries required for running
 programs which use cryptsetup-luks.
 
+%package -n	uclibc-%{libname}
+Summary:	Library for setting up encrypted filesystems (uClibc build)
+Group:		System/Libraries
+
+%description -n uclibc-%{libname}
+LUKS is the upcoming standard for Linux hard disk encryption.
+By providing a standard on-disk-format, it does not only facilitate
+compatibility among distributions, but also provide secure management
+of multiple user passwords. In contrast to existing solution, LUKS stores
+all setup necessary setup information in the partition header, enabling
+the user to transport or migrate his data seamlessly.
+
+This package contains the shared libraries required for running
+programs which use cryptsetup-luks.
 
 %package -n	%{devname}
 Summary:	Development library for setting up encrypted filesystems
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
+%if %{with uclibc}
+Requires:	uclibc-%{libname} = %{version}-%{release}
+%endif
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%mklibname -d cryptsetup 0
 
@@ -74,6 +111,19 @@ for building programs which use cryptsetup-luks.
 %setup -q
 
 %build
+CONFIGURE_TOP="$PWD"
+%if %{with uclibc}
+mkdir -p uclibc
+pushd uclibc
+%uclibc_configure \
+		--disable-selinux \
+		--sbindir=%{uclibc_root}/sbin
+%make
+popd
+%endif
+
+mkdir -p system
+pushd system
 %configure2_5x	--disable-selinux \
 		--sbindir=/sbin \
 %if %{with static}
@@ -85,9 +135,19 @@ for building programs which use cryptsetup-luks.
 %endif
 
 %make
+popd
 
 %install
-%makeinstall_std
+%if %{with uclibc}
+%makeinstall_std -C uclibc
+mkdir -p %{buildroot}%{uclibc_root}/%{_lib}
+mv %{buildroot}%{uclibc_root}%{_libdir}/libcryptsetup.so.%{major}* %{buildroot}%{uclibc_root}/%{_lib}
+ln -srf %{buildroot}%{uclibc_root}/%{_lib}/libcryptsetup.so.%{major}.* %{buildroot}%{uclibc_root}%{_libdir}/libcryptsetup.so
+
+rm -r %{buildroot}%{uclibc_root}%{_libdir}/pkgconfig
+%endif
+
+%makeinstall_std -C system
 
 mkdir -p %{buildroot}/%{_lib}
 mv %{buildroot}%{_libdir}/libcryptsetup.so.%{major}* %{buildroot}/%{_lib}
@@ -102,8 +162,19 @@ ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir
 /sbin/cryptsetup
 /sbin/veritysetup
 
+%if %{with uclibc}
+%files -n uclibc-%{name}
+%{uclibc_root}/sbin/cryptsetup
+%{uclibc_root}/sbin/veritysetup
+%endif
+
 %files -n %{libname}
 /%{_lib}/libcryptsetup.so.%{major}*
+
+%if %{with uclibc}
+%files -n uclibc-%{libname}
+%{uclibc_root}/%{_lib}/libcryptsetup.so.%{major}*
+%endif
 
 %files -n %{devname}
 %{_includedir}/libcryptsetup.h
@@ -111,4 +182,7 @@ ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir
 %{_libdir}/libcryptsetup.a
 %endif
 %{_libdir}/libcryptsetup.so
+%if %{with uclibc}
+%{uclibc_root}%{_libdir}/libcryptsetup.so
+%endif
 %{_libdir}/pkgconfig/libcryptsetup.pc

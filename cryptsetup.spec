@@ -1,5 +1,5 @@
 %define	major	4
-%define	libname	%mklibname cryptsetup %major
+%define	libname	%mklibname cryptsetup %{major}
 %define	devname	%mklibname cryptsetup -d
 
 %bcond_with compatible
@@ -12,8 +12,8 @@ Summary:	Utility for setting up encrypted filesystems
 License:	GPLv2
 Group:		System/Base
 URL:		http://code.google.com/p/cryptsetup/
-Source0:	http://cryptsetup.googlecode.com/files/%{name}-%{version}%{subver}.tar.bz2
-Source1:	http://cryptsetup.googlecode.com/files/%{name}-%{version}%{subver}.tar.bz2.asc
+Source0:	http://cryptsetup.googlecode.com/files/%{name}-%{version}.tar.bz2
+Source1:	http://cryptsetup.googlecode.com/files/%{name}-%{version}.tar.bz2.asc
 BuildRequires:	libgcrypt-devel >= 1.1.42
 BuildRequires:	libgpg-error-devel
 BuildRequires:	pkgconfig(devmapper)
@@ -86,16 +86,11 @@ for building programs which use cryptsetup-luks.
 %make
 
 %install
-
 %makeinstall_std
 
-# disabled since libgcrypt is under usr
-# move shared libraries in /%{_lib}
-# pushd %{buildroot}/%{_libdir}
-# mkdir -p ../../%{_lib}
-# mv lib*.so.* ../../%{_lib}
-# ln -s -f ../../%{_lib}/libcryptsetup.so.%{major}.* libcryptsetup.so
-# popd
+mkdir -p %{buildroot}/%{_lib}
+mv %{buildroot}%{_libdir}/libcryptsetup.so.%{major}* %{buildroot}/%{_lib}
+ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir}/libcryptsetup.so
 
 %find_lang %{name}
 
@@ -106,6 +101,9 @@ for building programs which use cryptsetup-luks.
 /sbin/cryptsetup
 /sbin/veritysetup
 
+%files -n %{libname}
+/%{_lib}/libcryptsetup.so.%{major}*
+
 %files -n %{devname}
 %{_includedir}/libcryptsetup.h
 %if %{with static}
@@ -113,6 +111,3 @@ for building programs which use cryptsetup-luks.
 %endif
 %{_libdir}/libcryptsetup.so
 %{_libdir}/pkgconfig/libcryptsetup.pc
-
-%files -n %{libname}
-/%{_libdir}/libcryptsetup.so.%{major}*

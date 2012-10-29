@@ -1,7 +1,6 @@
-%define subver          %{nil}
-%define major		4
-%define libname		%mklibname cryptsetup %major
-%define dlibname	%mklibname cryptsetup -d
+%define	major	4
+%define	libname	%mklibname cryptsetup %major
+%define	devname	%mklibname cryptsetup -d
 
 %bcond_with compatible
 %bcond_with static
@@ -23,8 +22,7 @@ BuildRequires:	pkgconfig(popt)
 %if %{with static}
 BuildRequires:	glibc-static-devel
 %endif
-Obsoletes:	cryptsetup-luks < 1.0.5
-Provides:	cryptsetup-luks = %{version}-%{release}
+%rename		cryptsetup-luks
 
 %description
 LUKS is the upcoming standard for Linux hard disk encryption. 
@@ -38,11 +36,11 @@ as a complete replacement for the original cryptsetup. It provides all the
 functionally of the original version plus all LUKS features, that are 
 accessible by luks* action.
 
-%package -n	%libname
+%package -n	%{libname}
 Summary:	Library for setting up encrypted filesystems
 Group:		System/Libraries
 
-%description -n %libname
+%description -n %{libname}
 LUKS is the upcoming standard for Linux hard disk encryption.
 By providing a standard on-disk-format, it does not only facilitate
 compatibility among distributions, but also provide secure management
@@ -54,15 +52,14 @@ This package contains the shared libraries required for running
 programs which use cryptsetup-luks.
 
 
-%package -n	%dlibname
+%package -n	%{devname}
 Summary:	Development library for setting up encrypted filesystems
 Group:		Development/C
-Requires:	%libname = %{version}-%{release}
-Provides:	cryptsetup-devel
-Provides:	%name-devel = %{version}-%{release}
+Requires:	%{libname} = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%mklibname -d cryptsetup 0
 
-%description -n %dlibname
+%description -n %{devname}
 LUKS is the upcoming standard for Linux hard disk encryption.
 By providing a standard on-disk-format, it does not only facilitate
 compatibility among distributions, but also provide secure management
@@ -74,17 +71,18 @@ This package contains the header files and development libraries
 for building programs which use cryptsetup-luks.
 
 %prep
-%setup -q -n %{name}-%{version}%{subver}
+%setup -q
 
 %build
-%configure2_5x --disable-selinux --sbindir=/sbin \
+%configure2_5x	--disable-selinux \
+		--sbindir=/sbin \
 %if %{with static}
-	--enable-static-cryptsetup \
+		--enable-static-cryptsetup \
 %endif
 %if %{with compatible}
-	--with-plain-mode=cbc-plain --with-luks1-keybits=128 \
+		--with-plain-mode=cbc-plain \
+		--with-luks1-keybits=128 \
 %endif
-# end of configure
 %make
 
 %install
@@ -99,19 +97,16 @@ for building programs which use cryptsetup-luks.
 # ln -s -f ../../%{_lib}/libcryptsetup.so.%{major}.* libcryptsetup.so
 # popd
 
-# Get rid of useless *.la file
-rm -f %buildroot%_libdir/*.la
-
 %find_lang %{name}
 
-%files -f %name.lang
+%files -f %{name}.lang
 %doc ChangeLog AUTHORS FAQ INSTALL NEWS README TODO
 %{_mandir}/man8/cryptsetup.8*
 %{_mandir}/man8/veritysetup.8*
 /sbin/cryptsetup
 /sbin/veritysetup
 
-%files -n %dlibname
+%files -n %{devname}
 %{_includedir}/libcryptsetup.h
 %if %{with static}
 %{_libdir}/libcryptsetup.a
@@ -119,5 +114,5 @@ rm -f %buildroot%_libdir/*.la
 %{_libdir}/libcryptsetup.so
 %{_libdir}/pkgconfig/libcryptsetup.pc
 
-%files -n %libname
+%files -n %{libname}
 /%{_libdir}/libcryptsetup.so.%{major}*

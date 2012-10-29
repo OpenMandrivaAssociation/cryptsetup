@@ -7,7 +7,7 @@
 %bcond_with static
 
 Name:		cryptsetup
-Version:	1.4.3
+Version:	1.5.1
 Release:	1
 Summary:	Utility for setting up encrypted filesystems
 License:	GPLv2
@@ -107,7 +107,9 @@ rm -f %buildroot%_libdir/*.la
 %files -f %name.lang
 %doc ChangeLog AUTHORS FAQ INSTALL NEWS README TODO
 %{_mandir}/man8/cryptsetup.8*
+%{_mandir}/man8/veritysetup.8*
 /sbin/cryptsetup
+/sbin/veritysetup
 
 %files -n %dlibname
 %{_includedir}/libcryptsetup.h

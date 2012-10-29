@@ -95,7 +95,7 @@ ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc ChangeLog AUTHORS FAQ INSTALL NEWS README TODO
+%doc ChangeLog AUTHORS FAQ NEWS README TODO
 %{_mandir}/man8/cryptsetup.8*
 %{_mandir}/man8/veritysetup.8*
 /sbin/cryptsetup

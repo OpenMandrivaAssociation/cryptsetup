@@ -117,7 +117,8 @@ mkdir -p uclibc
 pushd uclibc
 %uclibc_configure \
 		--disable-selinux \
-		--sbindir=%{uclibc_root}/sbin
+		--sbindir=%{uclibc_root}/sbin \
+		--enable-cryptsetup-reencrypt
 %make
 popd
 %endif
@@ -126,6 +127,7 @@ mkdir -p system
 pushd system
 %configure2_5x	--disable-selinux \
 		--sbindir=/sbin \
+		--enable-cryptsetup-reencrypt \
 %if %{with static}
 		--enable-static-cryptsetup \
 %endif
@@ -158,13 +160,16 @@ ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir
 %files -f %{name}.lang
 %doc ChangeLog AUTHORS FAQ NEWS README TODO
 %{_mandir}/man8/cryptsetup.8*
+%{_mandir}/man8/cryptsetup-reencrypt.8*
 %{_mandir}/man8/veritysetup.8*
 /sbin/cryptsetup
+/sbin/cryptsetup-reencrypt
 /sbin/veritysetup
 
 %if %{with uclibc}
 %files -n uclibc-%{name}
 %{uclibc_root}/sbin/cryptsetup
+%{uclibc_root}/sbin/cryptsetup-reencrypt
 %{uclibc_root}/sbin/veritysetup
 %endif
 

@@ -8,7 +8,7 @@
 
 Name:		cryptsetup
 Version:	1.5.1
-Release:	2
+Release:	3
 Summary:	Utility for setting up encrypted filesystems
 License:	GPLv2
 Group:		System/Base
@@ -206,6 +206,9 @@ ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir
 %{python_sitearch}/pycryptsetup.so
 
 %changelog
+* Dec Thu 13 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.5.1-2
+- rebuild on ABF
+
 * Mon Oct 29 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.5.1-2
 + Revision: 820552
 - build python bindings

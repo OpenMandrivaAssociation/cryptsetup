@@ -206,7 +206,7 @@ ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir
 %{python_sitearch}/pycryptsetup.so
 
 %changelog
-* Dec Thu 13 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.5.1-2
+* Thu Dec 13 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.5.1-2
 - rebuild on ABF
 
 * Mon Oct 29 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.5.1-2

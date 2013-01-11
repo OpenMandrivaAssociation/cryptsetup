@@ -8,7 +8,7 @@
 
 Name:		cryptsetup
 Version:	1.5.1
-Release:	4
+Release:	5
 Summary:	Utility for setting up encrypted filesystems
 License:	GPLv2
 Group:		System/Base

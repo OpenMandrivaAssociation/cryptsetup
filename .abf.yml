@@ -1,2 +1,5 @@
-sources:
+removed_sources:
   cryptsetup-1.5.1.tar.bz2: cd0b6091ffb2364e942e7c49c291f73351382bfc
+sources:
+  cryptsetup-1.6.0.tar.bz2: 2f40ea4259dd149ec604455dddc2e08f2e620fe4
+  cryptsetup-1.6.0.tar.bz2.asc: 4f62ac3d955a7678d9becaefd4be3f2a604d19c1

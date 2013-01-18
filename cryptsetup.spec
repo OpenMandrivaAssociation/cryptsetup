@@ -7,8 +7,8 @@
 %bcond_without	uclibc
 
 Name:		cryptsetup
-Version:	1.5.1
-Release:	5
+Version:	1.6.0
+Release:	1
 Summary:	Utility for setting up encrypted filesystems
 License:	GPLv2
 Group:		System/Base

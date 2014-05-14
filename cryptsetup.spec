@@ -8,8 +8,8 @@
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	1.6.1
-Release:	5
+Version:	1.6.4
+Release:	1
 License:	GPLv2
 Group:		System/Base
 Url:		http://code.google.com/p/cryptsetup/

@@ -13,7 +13,7 @@ Release:	1
 License:	GPLv2
 Group:		System/Base
 Url:		http://code.google.com/p/cryptsetup/
-Source0:	http://cryptsetup.googlecode.com/files/%{name}-%{version}.tar.bz2
+Source0:	http://cryptsetup.googlecode.com/files/%{name}-%{version}.tar.xz
 
 BuildRequires:	pkgconfig(devmapper)
 BuildRequires:	pkgconfig(gpg-error)

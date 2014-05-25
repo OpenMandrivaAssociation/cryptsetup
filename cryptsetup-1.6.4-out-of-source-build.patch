@@ -1,0 +1,8 @@
+--- cryptsetup-1.6.4/python/Makefile.am.omv~	2014-05-26 00:05:48.167098270 +0200
++++ cryptsetup-1.6.4/python/Makefile.am	2014-05-26 00:05:58.580896566 +0200
+@@ -1,4 +1,4 @@
+-AM_CPPFLAGS = -include $(top_srcdir)/config.h -I$(top_srcdir)/lib $(PYTHON_INCLUDES)
++AM_CPPFLAGS = -include $(top_builddir)/config.h -I$(top_builddir)/lib $(PYTHON_INCLUDES)
+ EXTRA_DIST = pycryptsetup-test.py
+ CLEANFILES = *.img
+ 

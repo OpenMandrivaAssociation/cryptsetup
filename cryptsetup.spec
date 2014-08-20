@@ -20,7 +20,7 @@ BuildRequires:	pkgconfig(devmapper)
 BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(libgcrypt)
 BuildRequires:	pkgconfig(popt)
-BuildRequires:	pkgconfig(python2)
+BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(uuid)
 %if %{with static}
 BuildRequires:	glibc-static-devel

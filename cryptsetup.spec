@@ -1,15 +1,15 @@
-%define	major	4
-%define	libname	%mklibname cryptsetup %{major}
-%define	devname	%mklibname cryptsetup -d
+%define major 4
+%define libname %mklibname cryptsetup %{major}
+%define devname %mklibname cryptsetup -d
 
-%bcond_with	compatible
-%bcond_with	static
-%bcond_without	uclibc
+%bcond_with compatible
+%bcond_with static
+%bcond_without uclibc
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	1.6.6
-Release:	3
+Version:	1.6.7
+Release:	1
 License:	GPLv2
 Group:		System/Base
 Url:		http://code.google.com/p/cryptsetup/
@@ -138,7 +138,7 @@ popd
 
 mkdir -p system
 pushd system
-%configure2_5x \
+%configure \
 	--disable-selinux \
 	--sbindir=/sbin \
 	--enable-python \
@@ -155,8 +155,7 @@ pushd system
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
-# (tpg) add -fno-lto for gcc-4.9 problems
-%make CFLAGS="${CFLAGS} -fno-lto"
+%make
 popd
 
 %install

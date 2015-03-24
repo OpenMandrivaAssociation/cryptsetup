@@ -122,6 +122,7 @@ for setting up disk encryption using dm-crypt kernel module.
 chmod -x python/pycryptsetup-test.py
 chmod -x misc/dracut_90reencrypt/*
 
+autoreconf -fiv
 
 %build
 CONFIGURE_TOP="$PWD"

@@ -9,7 +9,7 @@
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
 Version:	1.6.7
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System/Base
 Url:		http://code.google.com/p/cryptsetup/
@@ -27,6 +27,11 @@ BuildRequires:	glibc-static-devel
 %endif
 %if %{with uclibc}
 BuildRequires:	uClibc-devel >= 0.9.33.2-15
+BuildRequires:	uclibc-popt-devel
+BuildRequires:	uclibc-libgpg-error-devel
+BuildRequires:	uclibc-libgcrypt-error
+#BuildRequires:	uclibc-devmapper-devel
+#BuildRequires:	uclibc-libuuid-devel
 %endif
 %rename		cryptsetup-luks
 
@@ -42,6 +47,7 @@ as a complete replacement for the original cryptsetup. It provides all the
 functionally of the original version plus all LUKS features, that are 
 accessible by luks* action.
 
+%if %{with uclibc}
 %package -n	uclibc-%{name}
 Summary:	Utility for setting up encrypted filesystems (uClibc build)
 Group:		System/Base
@@ -57,6 +63,7 @@ LUKS for dm-crypt is implemented in cryptsetup. cryptsetup-luks is
 as a complete replacement for the original cryptsetup. It provides all the 
 functionally of the original version plus all LUKS features, that are 
 accessible by luks* action.
+%endif
 
 %package -n	%{libname}
 Summary:	Library for setting up encrypted filesystems
@@ -73,6 +80,7 @@ the user to transport or migrate his data seamlessly.
 This package contains the shared libraries required for running
 programs which use cryptsetup-luks.
 
+%if %{with uclibc}
 %package -n	uclibc-%{libname}
 Summary:	Library for setting up encrypted filesystems (uClibc build)
 Group:		System/Libraries
@@ -88,13 +96,30 @@ the user to transport or migrate his data seamlessly.
 This package contains the shared libraries required for running
 programs which use cryptsetup-luks.
 
+%package -n	uclibc-%{devname}
+Summary:	Development library for setting up encrypted filesystems
+Group:		Development/C
+Requires:	uclibc-%{libname} = %{version}-%{release}
+Requires:	%{devname} = %{version}-%{release}
+Provides:	uclibc-%{name}-devel = %{version}-%{release}
+Conflicts:	%{devname} < 1.6.7-2
+
+%description -n uclibc-%{devname}
+LUKS is the upcoming standard for Linux hard disk encryption.
+By providing a standard on-disk-format, it does not only facilitate
+compatibility among distributions, but also provide secure management
+of multiple user passwords. In contrast to existing solution, LUKS stores
+all setup necessary setup information in the partition header, enabling
+the user to transport or migrate his data seamlessly.
+
+This package contains the header files and development libraries
+for building programs which use cryptsetup-luks.
+%endif
+
 %package -n	%{devname}
 Summary:	Development library for setting up encrypted filesystems
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
-%if %{with uclibc}
-Requires:	uclibc-%{libname} = %{version}-%{release}
-%endif
 Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n %{devname}
@@ -199,6 +224,9 @@ ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir
 %if %{with uclibc}
 %files -n uclibc-%{libname}
 %{uclibc_root}/%{_lib}/libcryptsetup.so.%{major}*
+
+%files -n uclibc-%{devname}
+%{uclibc_root}%{_libdir}/libcryptsetup.so
 %endif
 
 %files -n %{devname}
@@ -207,9 +235,6 @@ ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir
 %{_libdir}/libcryptsetup.a
 %endif
 %{_libdir}/libcryptsetup.so
-%if %{with uclibc}
-%{uclibc_root}%{_libdir}/libcryptsetup.so
-%endif
 %{_libdir}/pkgconfig/libcryptsetup.pc
 
 %files -n python-%{name}

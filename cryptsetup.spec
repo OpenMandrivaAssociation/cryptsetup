@@ -29,7 +29,7 @@ BuildRequires:	glibc-static-devel
 BuildRequires:	uClibc-devel >= 0.9.33.2-15
 BuildRequires:	uclibc-popt-devel
 BuildRequires:	uclibc-libgpg-error-devel
-BuildRequires:	uclibc-libgcrypt-error
+BuildRequires:	uclibc-libgcrypt-devel
 #BuildRequires:	uclibc-devmapper-devel
 #BuildRequires:	uclibc-libuuid-devel
 %endif

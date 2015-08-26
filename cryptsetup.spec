@@ -4,12 +4,12 @@
 
 %bcond_with compatible
 %bcond_with static
-%bcond_without uclibc
+%bcond_with uclibc
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
 Version:	1.6.7
-Release:	5
+Release:	6
 License:	GPLv2
 Group:		System/Base
 Url:		http://code.google.com/p/cryptsetup/

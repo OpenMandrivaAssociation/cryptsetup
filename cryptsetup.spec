@@ -2,6 +2,7 @@
 %define libname %mklibname cryptsetup %{major}
 %define devname %mklibname cryptsetup -d
 
+%define _disable_rebuild_configure 1
 %bcond_with compatible
 %bcond_with static
 %bcond_with uclibc

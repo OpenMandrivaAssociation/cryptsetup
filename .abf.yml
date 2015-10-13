@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   cryptsetup-1.6.7.tar.gz: acc4cf3144a4b9ac958da825f51ad7ad926ee57e
+sources:
+  cryptsetup-1.6.8.tar.xz: fbcf5bee3396ea8004a9f08217a11cc4aea25052

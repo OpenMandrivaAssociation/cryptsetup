@@ -9,14 +9,15 @@
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	1.6.7
-Release:	7
+Version:	1.6.8
+Release:	1
 License:	GPLv2
 Group:		System/Base
-Url:		http://code.google.com/p/cryptsetup/
-Source0:	https://www.kernel.org/pub/linux/utils/%{name}/v1.6/%{name}-%{version}.tar.gz
+Url:		https://gitlab.com/cryptsetup/cryptsetup
+Source0:	https://www.kernel.org/pub/linux/utils/%{name}/v1.6/%{name}-%{version}.tar.xz
 Patch0:		cryptsetup-1.6.4-out-of-source-build.patch
 
+BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(devmapper)
 BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(libgcrypt)

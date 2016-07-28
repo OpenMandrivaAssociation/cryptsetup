@@ -19,7 +19,7 @@ Patch0:		cryptsetup-1.6.4-out-of-source-build.patch
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(devmapper)
 BuildRequires:	pkgconfig(gpg-error)
-BuildRequires:	pkgconfig(libgcrypt) >= 1.7.2-2
+BuildRequires:	pkgconfig(libgcrypt) >= 1.7.2
 BuildRequires:	pkgconfig(popt)
 BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(uuid)

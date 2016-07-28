@@ -9,7 +9,7 @@
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
 Version:	1.7.2
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System/Base
 Url:		https://gitlab.com/cryptsetup/cryptsetup
@@ -19,7 +19,7 @@ Patch0:		cryptsetup-1.6.4-out-of-source-build.patch
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(devmapper)
 BuildRequires:	pkgconfig(gpg-error)
-BuildRequires:	pkgconfig(libgcrypt)
+BuildRequires:	pkgconfig(libgcrypt) >= 1.7.2-2
 BuildRequires:	pkgconfig(popt)
 BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(uuid)

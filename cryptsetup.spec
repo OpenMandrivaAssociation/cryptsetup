@@ -8,7 +8,7 @@
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	1.7.2
+Version:	1.7.3
 Release:	2
 License:	GPLv2
 Group:		System/Base
@@ -118,7 +118,7 @@ ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc ChangeLog AUTHORS FAQ NEWS README TODO
+%doc AUTHORS FAQ NEWS README TODO
 %{_mandir}/man8/cryptsetup.8*
 %{_mandir}/man8/cryptsetup-reencrypt.8*
 %{_mandir}/man8/veritysetup.8*

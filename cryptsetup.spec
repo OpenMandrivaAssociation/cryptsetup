@@ -14,7 +14,7 @@ License:	GPLv2
 Group:		System/Base
 Url:		https://gitlab.com/cryptsetup/cryptsetup
 Source0:	https://www.kernel.org/pub/linux/utils/%{name}/v1.6/%{name}-%{version}.tar.xz
-Patch0:		cryptsetup-1.6.4-out-of-source-build.patch
+#Patch0:		cryptsetup-1.6.4-out-of-source-build.patch
 
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(devmapper)
@@ -23,6 +23,7 @@ BuildRequires:	pkgconfig(libgcrypt) >= 1.7.2
 BuildRequires:	pkgconfig(popt)
 BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(uuid)
+BuildRequires:	pkgconfig(libargon2)
 %if %{with static}
 BuildRequires:	glibc-static-devel
 %endif
@@ -95,6 +96,7 @@ autoreconf -fiv
 	--sbindir=/sbin \
 	--enable-python \
 	--enable-cryptsetup-reencrypt \
+	--enable-libargon2 \
 %if %{with static}
 	--enable-static-cryptsetup \
 %endif

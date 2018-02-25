@@ -8,7 +8,7 @@
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	1.7.5
+Version:	2.0.1
 Release:	1
 License:	GPLv2
 Group:		System/Base
@@ -40,7 +40,7 @@ as a complete replacement for the original cryptsetup. It provides all the
 functionally of the original version plus all LUKS features, that are 
 accessible by luks* action.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Library for setting up encrypted filesystems
 Group:		System/Libraries
 
@@ -55,11 +55,11 @@ the user to transport or migrate his data seamlessly.
 This package contains the shared libraries required for running
 programs which use cryptsetup-luks.
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	Development library for setting up encrypted filesystems
 Group:		Development/C
-Requires:	%{libname} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
+Requires:	%{libname} = %{EVRD}
+Provides:	%{name}-devel = %{EVRD}
 
 %description -n %{devname}
 LUKS is the upcoming standard for Linux hard disk encryption.
@@ -72,17 +72,18 @@ the user to transport or migrate his data seamlessly.
 This package contains the header files and development libraries
 for building programs which use cryptsetup-luks.
 
-%package -n	python-%{name}
+%package -n python-%{name}
 Summary:	Python bindings for %{name}
 Group:		Development/Python
 
-%description -n	python-%{name}
+%description -n python-%{name}
 This package provides Python bindings for libcryptsetup, a library
 for setting up disk encryption using dm-crypt kernel module.
 
 %prep
 %setup -q
 %apply_patches
+
 chmod -x python/pycryptsetup-test.py
 chmod -x misc/dracut_90reencrypt/*
 

@@ -14,7 +14,6 @@ License:	GPLv2
 Group:		System/Base
 Url:		https://gitlab.com/cryptsetup/cryptsetup
 Source0:	https://www.kernel.org/pub/linux/utils/%{name}/v1.6/%{name}-%{version}.tar.xz
-#Patch0:		cryptsetup-1.6.4-out-of-source-build.patch
 
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(devmapper)
@@ -124,12 +123,15 @@ ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir
 
 %files -f %{name}.lang
 %doc AUTHORS FAQ NEWS README TODO
-%{_mandir}/man8/cryptsetup.8*
-%{_mandir}/man8/cryptsetup-reencrypt.8*
-%{_mandir}/man8/veritysetup.8*
+%{_tmpfilesdir}/cryptsetup.conf
 /sbin/cryptsetup
 /sbin/cryptsetup-reencrypt
 /sbin/veritysetup
+/sbin/integritysetup
+%{_mandir}/man8/cryptsetup.8*
+%{_mandir}/man8/cryptsetup-reencrypt.8*
+%{_mandir}/man8/veritysetup.8*
+%{_mandir}/man8/man8/integritysetup.8*
 
 %files -n %{libname}
 /%{_lib}/libcryptsetup.so.%{major}*

@@ -24,6 +24,7 @@ BuildRequires:	pkgconfig(popt)
 BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(libargon2)
+BuildRequires:	pkgconfig(json-c)
 %if %{with static}
 BuildRequires:	glibc-static-devel
 %endif

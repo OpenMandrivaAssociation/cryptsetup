@@ -131,7 +131,7 @@ ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir
 %{_mandir}/man8/cryptsetup.8*
 %{_mandir}/man8/cryptsetup-reencrypt.8*
 %{_mandir}/man8/veritysetup.8*
-%{_mandir}/man8/man8/integritysetup.8*
+%{_mandir}/man8/integritysetup.8*
 
 %files -n %{libname}
 /%{_lib}/libcryptsetup.so.%{major}*

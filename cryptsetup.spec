@@ -1,4 +1,4 @@
-%define major 4
+%define major 12
 %define libname %mklibname cryptsetup %{major}
 %define devname %mklibname cryptsetup -d
 
@@ -25,6 +25,7 @@ BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(libargon2)
 BuildRequires:	pkgconfig(json-c)
+BuildRequires:	pkgconfig(libsystemd)
 %if %{with static}
 BuildRequires:	glibc-static-devel
 %endif

@@ -1,4 +1,4 @@
-%define major 4
+%define major 12
 %define libname %mklibname cryptsetup %{major}
 %define devname %mklibname cryptsetup -d
 
@@ -8,13 +8,12 @@
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	1.7.5
+Version:	2.0.1
 Release:	1
 License:	GPLv2
 Group:		System/Base
 Url:		https://gitlab.com/cryptsetup/cryptsetup
 Source0:	https://www.kernel.org/pub/linux/utils/%{name}/v1.6/%{name}-%{version}.tar.xz
-Patch0:		cryptsetup-1.6.4-out-of-source-build.patch
 
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(devmapper)
@@ -23,6 +22,9 @@ BuildRequires:	pkgconfig(libgcrypt) >= 1.7.2
 BuildRequires:	pkgconfig(popt)
 BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(uuid)
+BuildRequires:	pkgconfig(libargon2)
+BuildRequires:	pkgconfig(json-c)
+BuildRequires:	pkgconfig(libsystemd)
 %if %{with static}
 BuildRequires:	glibc-static-devel
 %endif
@@ -40,7 +42,7 @@ as a complete replacement for the original cryptsetup. It provides all the
 functionally of the original version plus all LUKS features, that are 
 accessible by luks* action.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Library for setting up encrypted filesystems
 Group:		System/Libraries
 
@@ -55,11 +57,11 @@ the user to transport or migrate his data seamlessly.
 This package contains the shared libraries required for running
 programs which use cryptsetup-luks.
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	Development library for setting up encrypted filesystems
 Group:		Development/C
-Requires:	%{libname} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
+Requires:	%{libname} = %{EVRD}
+Provides:	%{name}-devel = %{EVRD}
 
 %description -n %{devname}
 LUKS is the upcoming standard for Linux hard disk encryption.
@@ -72,17 +74,18 @@ the user to transport or migrate his data seamlessly.
 This package contains the header files and development libraries
 for building programs which use cryptsetup-luks.
 
-%package -n	python-%{name}
+%package -n python-%{name}
 Summary:	Python bindings for %{name}
 Group:		Development/Python
 
-%description -n	python-%{name}
+%description -n python-%{name}
 This package provides Python bindings for libcryptsetup, a library
 for setting up disk encryption using dm-crypt kernel module.
 
 %prep
 %setup -q
 %apply_patches
+
 chmod -x python/pycryptsetup-test.py
 chmod -x misc/dracut_90reencrypt/*
 
@@ -94,6 +97,7 @@ autoreconf -fiv
 	--sbindir=/sbin \
 	--enable-python \
 	--enable-cryptsetup-reencrypt \
+	--enable-libargon2 \
 %if %{with static}
 	--enable-static-cryptsetup \
 %endif
@@ -119,12 +123,15 @@ ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir
 
 %files -f %{name}.lang
 %doc AUTHORS FAQ NEWS README TODO
-%{_mandir}/man8/cryptsetup.8*
-%{_mandir}/man8/cryptsetup-reencrypt.8*
-%{_mandir}/man8/veritysetup.8*
+%{_tmpfilesdir}/cryptsetup.conf
 /sbin/cryptsetup
 /sbin/cryptsetup-reencrypt
 /sbin/veritysetup
+/sbin/integritysetup
+%{_mandir}/man8/cryptsetup.8*
+%{_mandir}/man8/cryptsetup-reencrypt.8*
+%{_mandir}/man8/veritysetup.8*
+%{_mandir}/man8/integritysetup.8*
 
 %files -n %{libname}
 /%{_lib}/libcryptsetup.so.%{major}*

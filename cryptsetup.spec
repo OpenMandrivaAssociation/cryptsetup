@@ -25,6 +25,7 @@ BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(libargon2)
 BuildRequires:	pkgconfig(json-c)
 BuildRequires:	pkgconfig(libsystemd)
+BuildRequires:	systemd
 %if %{with static}
 BuildRequires:	glibc-static-devel
 %endif

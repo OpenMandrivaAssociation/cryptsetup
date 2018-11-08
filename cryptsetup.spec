@@ -8,8 +8,8 @@
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	2.0.3
-Release:	2
+Version:	2.0.5
+Release:	1
 License:	GPLv2
 Group:		System/Base
 Url:		https://gitlab.com/cryptsetup/cryptsetup
@@ -25,7 +25,7 @@ BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(libargon2)
 BuildRequires:	pkgconfig(json-c)
 BuildRequires:	pkgconfig(libsystemd)
-BuildRequires:	systemd
+BuildRequires:	systemd-macros
 %if %{with static}
 BuildRequires:	glibc-static-devel
 %endif
@@ -84,8 +84,7 @@ This package provides Python bindings for libcryptsetup, a library
 for setting up disk encryption using dm-crypt kernel module.
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 
 chmod -x python/pycryptsetup-test.py
 chmod -x misc/dracut_90reencrypt/*
@@ -111,10 +110,10 @@ autoreconf -fiv
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 
 mkdir -p %{buildroot}/%{_lib}
 mv %{buildroot}%{_libdir}/libcryptsetup.so.%{major}* %{buildroot}/%{_lib}

@@ -24,6 +24,7 @@ BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(libargon2)
 BuildRequires:	pkgconfig(json-c)
+BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(libsystemd)
 BuildRequires:	systemd-macros
 %if %{with static}

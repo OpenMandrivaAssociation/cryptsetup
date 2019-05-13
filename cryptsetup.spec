@@ -8,7 +8,7 @@
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	2.0.6
+Version:	2.1.0
 Release:	1
 License:	GPLv2
 Group:		System/Base
@@ -18,7 +18,7 @@ Source0:	https://www.kernel.org/pub/linux/utils/%{name}/v%(echo %{version} |cut 
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(devmapper) >= 1.02.153
 BuildRequires:	pkgconfig(gpg-error)
-BuildRequires:	pkgconfig(libgcrypt) >= 1.7.2
+BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(popt)
 BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(uuid)
@@ -99,6 +99,7 @@ autoreconf -fiv
 	--enable-python \
 	--enable-cryptsetup-reencrypt \
 	--enable-libargon2 \
+	--with-cypto-backend=openssl \
 %if %{with static}
 	--enable-static-cryptsetup \
 %endif

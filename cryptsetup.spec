@@ -1,6 +1,7 @@
 %define major 12
 %define libname %mklibname cryptsetup %{major}
 %define devname %mklibname cryptsetup -d
+%global optflags %{optflags} -O3
 
 %define _disable_rebuild_configure 1
 %bcond_with compatible

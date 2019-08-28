@@ -9,7 +9,7 @@
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	2.1.0
+Version:	2.2.0
 Release:	1
 License:	GPLv2
 Group:		System/Base
@@ -34,7 +34,7 @@ BuildRequires:	glibc-static-devel
 %rename		cryptsetup-luks
 
 %description
-LUKS is the upcoming standard for Linux hard disk encryption. 
+LUKS is the upcoming standard for Linux hard disk encryption.
 By providing a standard on-disk-format, it does not only facilitate 
 compatibility among distributions, but also provide secure management 
 of multiple user passwords. In contrast to existing solution, LUKS stores 

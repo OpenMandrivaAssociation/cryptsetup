@@ -88,7 +88,6 @@ for setting up disk encryption using dm-crypt kernel module.
 %prep
 %autosetup -p1
 
-chmod -x python/pycryptsetup-test.py
 chmod -x misc/dracut_90reencrypt/*
 
 autoreconf -fiv

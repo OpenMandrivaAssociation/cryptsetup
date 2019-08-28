@@ -89,15 +89,14 @@ autoreconf -fiv
 	--sbindir=/sbin \
 	--enable-cryptsetup-reencrypt \
 	--enable-libargon2 \
-	--with-crypto_backend=openssl \
 %if %{with static}
 	--enable-static-cryptsetup \
 %endif
 %if %{with compatible}
 	--with-plain-mode=cbc-plain \
-	--with-luks1-keybits=128 \
+	--with-luks1-keybits=128
 %endif
-	--with-luks2-parallel-threads
+	--with-crypto_backend=openssl
 
 # remove rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool

@@ -21,7 +21,6 @@ BuildRequires:	pkgconfig(devmapper) >= 1.02.153
 BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(popt)
-BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(libargon2)
 BuildRequires:	pkgconfig(json-c)
@@ -77,14 +76,6 @@ the user to transport or migrate his data seamlessly.
 This package contains the header files and development libraries
 for building programs which use cryptsetup-luks.
 
-%package -n python-%{name}
-Summary:	Python bindings for %{name}
-Group:		Development/Python
-
-%description -n python-%{name}
-This package provides Python bindings for libcryptsetup, a library
-for setting up disk encryption using dm-crypt kernel module.
-
 %prep
 %autosetup -p1
 
@@ -96,17 +87,17 @@ autoreconf -fiv
 %configure \
 	--disable-selinux \
 	--sbindir=/sbin \
-	--enable-python \
 	--enable-cryptsetup-reencrypt \
 	--enable-libargon2 \
-	--with-cypto-backend=openssl \
+	--with-crypto_backend=openssl \
 %if %{with static}
 	--enable-static-cryptsetup \
 %endif
 %if %{with compatible}
 	--with-plain-mode=cbc-plain \
-	--with-luks1-keybits=128
+	--with-luks1-keybits=128 \
 %endif
+	--with-luks2-parallel-threads
 
 # remove rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -145,6 +136,3 @@ ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir
 %endif
 %{_libdir}/libcryptsetup.so
 %{_libdir}/pkgconfig/libcryptsetup.pc
-
-%files -n python-%{name}
-%{python_sitearch}/pycryptsetup.so

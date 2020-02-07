@@ -9,7 +9,7 @@
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	2.2.2
+Version:	2.3.0
 Release:	1
 License:	GPLv2
 Group:		System/Base
@@ -19,7 +19,6 @@ Source0:	https://www.kernel.org/pub/linux/utils/%{name}/v%(echo %{version} |cut 
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(devmapper) >= 1.02.153
 BuildRequires:	pkgconfig(gpg-error)
-BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(popt)
 BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(libargon2)
@@ -96,7 +95,11 @@ autoreconf -fiv
 	--with-plain-mode=cbc-plain \
 	--with-luks1-keybits=128
 %endif
-	--with-crypto_backend=openssl
+	--with-crypto_backend=kernel
+# NOTE: --with-crypto_backend=openssl breaks steam
+# https://github.com/ValveSoftware/steam-for-linux/issues/6861
+# kernel is safer because it doesn't drag in any extra libraries
+# that might clash.
 
 # remove rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool

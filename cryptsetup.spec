@@ -10,7 +10,7 @@
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
 Version:	2.3.1
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System/Base
 Url:		https://gitlab.com/cryptsetup/cryptsetup
@@ -83,6 +83,10 @@ chmod -x misc/dracut_90reencrypt/*
 autoreconf -fiv
 
 %build
+# (tpg) 2020-03-15 BIG FAT WARNING
+# grub and calamares does not support LUKS2
+# so stick to LUKS1 until they extend support
+
 %configure \
 	--disable-selinux \
 	--sbindir=/sbin \
@@ -93,8 +97,9 @@ autoreconf -fiv
 %endif
 %if %{with compatible}
 	--with-plain-mode=cbc-plain \
-	--with-luks1-keybits=128
+	--with-luks1-keybits=128 \
 %endif
+	--with-default-luks-format=LUKS1 \
 	--with-crypto_backend=kernel
 # NOTE: --with-crypto_backend=openssl breaks steam
 # https://github.com/ValveSoftware/steam-for-linux/issues/6861

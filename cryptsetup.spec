@@ -9,8 +9,8 @@
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	2.3.3
-Release:	2
+Version:	2.3.4
+Release:	1
 License:	GPLv2
 Group:		System/Base
 Url:		https://gitlab.com/cryptsetup/cryptsetup

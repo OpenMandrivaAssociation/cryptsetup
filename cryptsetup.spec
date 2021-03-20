@@ -88,6 +88,7 @@ autoreconf -fiv
 %configure \
 	--disable-selinux \
 	--sbindir=/sbin \
+	--with-tmpfilesdir="%{_tmpfilesdir}" \
 	--enable-cryptsetup-reencrypt \
 	--enable-libargon2 \
 %if %{with static}

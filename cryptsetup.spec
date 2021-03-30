@@ -9,7 +9,7 @@
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	2.3.4
+Version:	2.3.5
 Release:	1
 License:	GPLv2
 Group:		System/Base
@@ -18,13 +18,11 @@ Source0:	https://www.kernel.org/pub/linux/utils/%{name}/v%(echo %{version} |cut 
 
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(devmapper) >= 1.02.153
-BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(popt)
 BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(libargon2)
 BuildRequires:	pkgconfig(json-c)
 BuildRequires:	pkgconfig(blkid)
-BuildRequires:	pkgconfig(libsystemd)
 BuildRequires:	systemd-macros
 %if %{with static}
 BuildRequires:	glibc-static-devel
@@ -90,6 +88,7 @@ autoreconf -fiv
 %configure \
 	--disable-selinux \
 	--sbindir=/sbin \
+	--with-tmpfilesdir="%{_tmpfilesdir}" \
 	--enable-cryptsetup-reencrypt \
 	--enable-libargon2 \
 %if %{with static}

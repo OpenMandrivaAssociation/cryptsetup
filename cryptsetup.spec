@@ -9,8 +9,8 @@
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	2.3.6
-Release:	2
+Version:	2.4.2
+Release:	1
 License:	GPLv2
 Group:		System/Base
 Url:		https://gitlab.com/cryptsetup/cryptsetup
@@ -90,6 +90,7 @@ autoreconf -fiv
 	--sbindir=/sbin \
 	--with-tmpfilesdir="%{_tmpfilesdir}" \
 	--enable-cryptsetup-reencrypt \
+	--disable-ssh-token \
 	--enable-libargon2 \
 %if %{with static}
 	--enable-static-cryptsetup \
@@ -121,7 +122,7 @@ ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc AUTHORS FAQ NEWS README TODO
+%doc AUTHORS FAQ
 %{_tmpfilesdir}/cryptsetup.conf
 /sbin/cryptsetup
 /sbin/cryptsetup-reencrypt

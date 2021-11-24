@@ -23,7 +23,7 @@ BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(libargon2)
 BuildRequires:	pkgconfig(json-c)
 BuildRequires:	pkgconfig(blkid)
-BuildRequires:	systemd-macros
+BuildRequires:	systemd-rpm-macros
 %if %{with static}
 BuildRequires:	glibc-static-devel
 %endif

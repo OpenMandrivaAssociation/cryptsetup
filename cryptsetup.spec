@@ -10,7 +10,7 @@
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
 Version:	2.4.3
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System/Base
 Url:		https://gitlab.com/cryptsetup/cryptsetup
@@ -88,7 +88,6 @@ autoreconf -fiv
 
 %configure \
 	--disable-selinux \
-	--sbindir=/sbin \
 	--with-tmpfilesdir="%{_tmpfilesdir}" \
 	--enable-cryptsetup-reencrypt \
 	--disable-ssh-token \
@@ -118,26 +117,19 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %install
 %make_install
 
-mkdir -p %{buildroot}/%{_lib}
-mv %{buildroot}%{_libdir}/libcryptsetup.so.%{major}* %{buildroot}/%{_lib}
-ln -srf %{buildroot}/%{_lib}/libcryptsetup.so.%{major}.*.* %{buildroot}%{_libdir}/libcryptsetup.so
-
 %find_lang %{name}
 
 %files -f %{name}.lang
 %doc AUTHORS FAQ
 %{_tmpfilesdir}/cryptsetup.conf
-/sbin/cryptsetup
-/sbin/cryptsetup-reencrypt
-/sbin/veritysetup
-/sbin/integritysetup
+%{_sbindir}/*
 %doc %{_mandir}/man8/cryptsetup.8*
 %doc %{_mandir}/man8/cryptsetup-reencrypt.8*
 %doc %{_mandir}/man8/veritysetup.8*
 %doc %{_mandir}/man8/integritysetup.8*
 
 %files -n %{libname}
-/%{_lib}/libcryptsetup.so.%{major}*
+%{_libdir}/libcryptsetup.so.%{major}*
 
 %files -n %{devname}
 %{_includedir}/libcryptsetup.h

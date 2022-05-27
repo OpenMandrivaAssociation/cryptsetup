@@ -10,7 +10,7 @@
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
 Version:	2.4.3
-Release:	2
+Release:	3
 License:	GPLv2
 Group:		System/Base
 Url:		https://gitlab.com/cryptsetup/cryptsetup
@@ -129,6 +129,7 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %doc %{_mandir}/man8/integritysetup.8*
 
 %files -n %{libname}
+%dir %{_libdir}/%{name}
 %{_libdir}/libcryptsetup.so.%{major}*
 
 %files -n %{devname}

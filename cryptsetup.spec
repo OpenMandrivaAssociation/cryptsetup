@@ -25,6 +25,7 @@ BuildRequires:	pkgconfig(libgcrypt)
 BuildRequires:	pkgconfig(json-c)
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	systemd-rpm-macros
+BuildRequires:	asciidoctor
 %if %{with static}
 BuildRequires:	glibc-static-devel
 %endif

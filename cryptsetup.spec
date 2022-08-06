@@ -9,8 +9,8 @@
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	2.4.3
-Release:	3
+Version:	2.5.0
+Release:	1
 License:	GPLv2
 Group:		System/Base
 Url:		https://gitlab.com/cryptsetup/cryptsetup
@@ -76,9 +76,6 @@ for building programs which use cryptsetup-luks.
 
 %prep
 %autosetup -p1
-
-chmod -x misc/dracut_90reencrypt/*
-
 autoreconf -fiv
 
 %build
@@ -120,11 +117,11 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc AUTHORS FAQ
+%doc AUTHORS
 %{_tmpfilesdir}/cryptsetup.conf
 %{_sbindir}/*
 %doc %{_mandir}/man8/cryptsetup.8*
-%doc %{_mandir}/man8/cryptsetup-reencrypt.8*
+%doc %{_mandir}/man8/cryptsetup-*.8*
 %doc %{_mandir}/man8/veritysetup.8*
 %doc %{_mandir}/man8/integritysetup.8*
 

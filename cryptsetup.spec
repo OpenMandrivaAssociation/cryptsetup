@@ -1,5 +1,6 @@
 %define major 12
-%define libname %mklibname cryptsetup %{major}
+%define oldlibname %mklibname cryptsetup 12
+%define libname %mklibname cryptsetup
 %define devname %mklibname cryptsetup -d
 %global optflags %{optflags} -O3
 
@@ -9,7 +10,7 @@
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	2.7.0
+Version:	2.7.1
 Release:	1
 License:	GPLv2
 Group:		System/Base
@@ -46,6 +47,7 @@ accessible by luks* action.
 %package -n %{libname}
 Summary:	Library for setting up encrypted filesystems
 Group:		System/Libraries
+%rename %{oldlibname}
 
 %description -n %{libname}
 LUKS is the upcoming standard for Linux hard disk encryption.

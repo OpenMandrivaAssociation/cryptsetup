@@ -10,7 +10,7 @@
 
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
-Version:	2.7.1
+Version:	2.7.5
 Release:	1
 License:	GPLv2
 Group:		System/Base

@@ -17,6 +17,11 @@ Group:		System/Base
 Url:		https://gitlab.com/cryptsetup/cryptsetup
 Source0:	https://www.kernel.org/pub/linux/utils/%{name}/v%(echo %{version} |cut -d. -f1-2)/%{name}-%{version}.tar.xz
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(devmapper) >= 1.02.153
 BuildRequires:	pkgconfig(popt)

@@ -19,7 +19,6 @@ Source0:	https://www.kernel.org/pub/linux/utils/%{name}/v%(echo %{version} |cut 
 
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libtool-base
 BuildRequires:	slibtool
 BuildRequires:	make
 BuildRequires:	gettext-devel
@@ -112,11 +111,6 @@ autoreconf -fiv
 # kernel is safer because it doesn't drag in any extra libraries
 # that might clash.
 # NOTE2: --with-crypto_backend=kernel is slow and should not be used except embedded systems
-
-# remove rpath
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-
 %make_build
 
 %install

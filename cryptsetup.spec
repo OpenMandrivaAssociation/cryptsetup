@@ -11,7 +11,7 @@
 Summary:	Utility for setting up encrypted filesystems
 Name:		cryptsetup
 Version:	2.8.8
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System/Base
 Url:		https://gitlab.com/cryptsetup/cryptsetup
@@ -52,6 +52,11 @@ accessible by luks* action.
 Summary:	Library for setting up encrypted filesystems
 Group:		System/Libraries
 %rename %{oldlibname}
+# libdevmapper is built with udev_sync: after creating a mapping it waits on a
+# semaphore that only 95-dm-notify.rules (in dmsetup) releases. Without those
+# rules every `cryptsetup open` -- and systemd-cryptsetup at boot -- waits
+# forever, ignoring SIGINT.
+Requires:	dmsetup
 
 %description -n %{libname}
 LUKS is the upcoming standard for Linux hard disk encryption.
